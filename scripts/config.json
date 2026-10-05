@@ -1,0 +1,11 @@
+{
+  "container_name": "bitwarden",
+  "data_directory": "/srv/docker/bitwarden/data",
+  "staging_directory": "/var/lib/vaultwarden-backup/staging",
+  "output_directory": "/var/lib/vaultwarden-backup/output",
+  "sqlite_binary": "/usr/bin/sqlite3",
+  "docker_binary": "/usr/bin/docker",
+  "tar_binary": "/usr/bin/tar",
+  "compression": "zstd",
+  "log_directory": "/var/log/vaultwarden-backup"
+}
