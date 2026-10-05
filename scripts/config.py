@@ -19,7 +19,16 @@ class BackupConfig:
 
 
 class ConfigLoader:
-    DEFAULT_CONFIG = Path("/etc/vaultwarden-backup/config.json")
+    DEFAULT_CONFIG = (
+        Path(__file__).resolve().parents[1] / "config.json"
+    )
+
+    @staticmethod
+    def _resolve_default_config() -> Path:
+        candidate = ConfigLoader.DEFAULT_CONFIG
+        if candidate.exists():
+            return candidate
+        return Path("/etc/vaultwarden-backup/config.json")
 
     def load(
         self,
@@ -27,7 +36,9 @@ class ConfigLoader:
         cli_overrides: dict,
     ) -> BackupConfig:
 
-        with config_file.open() as f:
+        resolved_file = config_file or self._resolve_default_config()
+
+        with resolved_file.open() as f:
             values = json.load(f)
 
         values.update({
